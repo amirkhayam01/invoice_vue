@@ -95,11 +95,11 @@
                         <div class="modal-body d-flex" v-for="(user, index) in users" :key="index">
 
                             <div class="btn-rounded-circle badge-primary">
-                               <div class="ml-3 mt-2"> {{user.name.substring(0,2)}}</div>
+                               <div style="margin-left:10px; margin-top:8px"> {{user.name.substring(0,2)}}</div>
                             </div>
                            <div  class="font-weight-bold ml-4">
                                {{user.name}}
-                             <div>
+                             <div class="text-muted">
                                 {{user.email}}
                              </div>
                           </div>
@@ -125,31 +125,27 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Name:</label>
+                                    <label for="recipient-name" class="col-form-label text-muted">Full Name (required)</label>
                                     <input type="text" class="form-control" id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Email:</label>
+                                    <label for="recipient-name" class="col-form-label text-muted">E-mail address (required)</label>
                                     <input type="text" class="form-control" id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Address:</label>
+                                    <label for="recipient-name" class="col-form-label text-muted">Client's Address (required)</label>
                                     <input type="text" class="form-control" id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                    <label for="recipient-name" class="col-form-label text-muted">Client's Company</label>
                                     <input type="text" class="form-control" id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Company:</label>
+                                    <label for="recipient-name" class="col-form-label text-muted">Country</label>
                                     <input type="text" class="form-control" id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Country:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Phone:</label>
+                                    <label for="recipient-name" class="col-form-label text-muted">Phone:</label>
                                     <input type="text" class="form-control" id="recipient-name">
                                 </div>
 

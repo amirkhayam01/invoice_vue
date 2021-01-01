@@ -2212,10 +2212,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user_data: {
@@ -6709,7 +6705,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* image 1 */\n.invoice {\n    font-style: normal;\n    font-weight: normal;\n    font-size: 48px;\n    line-height: 56px;\n    align-items: center;\n    text-align: right;\n\n    color: #3C445F;\n}\n.clickable{\n    /* Rectangle 4 */\n\n\n    background: #FFFFFF;\n    border: 1px dashed #A4A8B7;\n    box-sizing: border-box;\n    border-radius: 8px;\n    cursor: pointer\n}\n.tablehead {\n        /* Rectangle 7 */\n\n    background: #F4F4F4;\n}\n.h6 {\n        color: #3C445F;\n}\n.td {\n\n        cursor: pointer;\n}\n.svg-icon {\n        width: 20px;\n}\n.btn-rounded-circle{\n        width: 39px;\n        height: 39px;\n        border: 1px;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* image 1 */\n.invoice {\n    font-style: normal;\n    font-weight: normal;\n    font-size: 48px;\n    line-height: 56px;\n    align-items: center;\n    text-align: right;\n\n    color: #3C445F;\n}\n.clickable{\n    /* Rectangle 4 */\n\n\n    background: #FFFFFF;\n    border: 1px dashed #A4A8B7;\n    box-sizing: border-box;\n    border-radius: 8px;\n    cursor: pointer\n}\n.tablehead {\n        /* Rectangle 7 */\n\n    background: #F4F4F4;\n}\n.h6 {\n        color: #3C445F;\n}\n.td {\n\n        cursor: pointer;\n}\n.svg-icon {\n        width: 20px;\n}\n.btn-rounded-circle{\n        width: 39px;\n        height: 39px;\n        border: 1px;\n}\n", ""]);
 
 // exports
 
@@ -38558,11 +38554,21 @@ var render = function() {
                                       "btn-rounded-circle badge-primary"
                                   },
                                   [
-                                    _c("div", { staticClass: "ml-3 mt-2" }, [
-                                      _vm._v(
-                                        " " + _vm._s(user.name.substring(0, 2))
-                                      )
-                                    ])
+                                    _c(
+                                      "div",
+                                      {
+                                        staticStyle: {
+                                          "margin-left": "10px",
+                                          "margin-top": "8px"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(user.name.substring(0, 2))
+                                        )
+                                      ]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -38575,7 +38581,7 @@ var render = function() {
                                         _vm._s(user.name) +
                                         "\n                           "
                                     ),
-                                    _c("div", [
+                                    _c("div", { staticClass: "text-muted" }, [
                                       _vm._v(
                                         "\n                              " +
                                           _vm._s(user.email) +
@@ -39036,10 +39042,10 @@ var staticRenderFns = [
                     _c(
                       "label",
                       {
-                        staticClass: "col-form-label",
+                        staticClass: "col-form-label text-muted",
                         attrs: { for: "recipient-name" }
                       },
-                      [_vm._v("Name:")]
+                      [_vm._v("Full Name (required)")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -39052,10 +39058,10 @@ var staticRenderFns = [
                     _c(
                       "label",
                       {
-                        staticClass: "col-form-label",
+                        staticClass: "col-form-label text-muted",
                         attrs: { for: "recipient-name" }
                       },
-                      [_vm._v("Email:")]
+                      [_vm._v("E-mail address (required)")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -39068,10 +39074,10 @@ var staticRenderFns = [
                     _c(
                       "label",
                       {
-                        staticClass: "col-form-label",
+                        staticClass: "col-form-label text-muted",
                         attrs: { for: "recipient-name" }
                       },
-                      [_vm._v("Address:")]
+                      [_vm._v("Client's Address (required)")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -39084,10 +39090,10 @@ var staticRenderFns = [
                     _c(
                       "label",
                       {
-                        staticClass: "col-form-label",
+                        staticClass: "col-form-label text-muted",
                         attrs: { for: "recipient-name" }
                       },
-                      [_vm._v("Recipient:")]
+                      [_vm._v("Client's Company")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -39100,10 +39106,10 @@ var staticRenderFns = [
                     _c(
                       "label",
                       {
-                        staticClass: "col-form-label",
+                        staticClass: "col-form-label text-muted",
                         attrs: { for: "recipient-name" }
                       },
-                      [_vm._v("Company:")]
+                      [_vm._v("Country")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -39116,23 +39122,7 @@ var staticRenderFns = [
                     _c(
                       "label",
                       {
-                        staticClass: "col-form-label",
-                        attrs: { for: "recipient-name" }
-                      },
-                      [_vm._v("Country:")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "recipient-name" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-form-label",
+                        staticClass: "col-form-label text-muted",
                         attrs: { for: "recipient-name" }
                       },
                       [_vm._v("Phone:")]
@@ -51614,8 +51604,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\invoice\invoice\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\invoice\invoice\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\invoice\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\invoice\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
