@@ -8,5 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-    protected $guarder = [];
+
+    protected $guarded = [];
+
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice');
+    }
 }

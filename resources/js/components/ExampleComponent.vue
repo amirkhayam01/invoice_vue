@@ -57,13 +57,56 @@
 
 
               <!-- Text -->
-              <p class="mt-2 mb-4" style="line-height: 25px;" >
-                Kenny Blankenship <br>
-                Sheptytskoho 1/2 <br>
-                Kyiv, Ukraine <br>
-                suproshka@gmail.com <br>
-                +38 093 85 71 387<br>
-              </p>
+
+                <div class="mt-2 mb-4 overlay profile-pic" style="line-height: 25px;" >
+                    {{editUserForm.auth_user_data.name}}<br>
+                    {{editUserForm.auth_user_data.address}} <br>
+                    {{editUserForm.auth_user_data.state}}, {{editUserForm.auth_user_data.city}}<br>
+                    {{editUserForm.auth_user_data.email}}  <br>
+                    {{editUserForm.auth_user_data.phone}}<br>
+                    <div class="edit mt-3" data-toggle="modal" data-target="#useredit" data-whatever="@mdo"  data-placement="bottom" title="Edit This"><i class="pencil"></i></div>
+                </div>
+                <div class="modal fade" id="useredit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                          <form @submit.prevent="editUser()">
+                            <div class="form-group">
+                                <label  class="col-form-label">Name:</label>
+                                <input type="text" v-model="editUserForm.auth_user_data.name" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Address:</label>
+                                <input type="text" v-model="editUserForm.auth_user_data.address" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">State:</label>
+                                <input type="text" v-model="editUserForm.auth_user_data.state" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Email:</label>
+                                <input type="text" v-model="editUserForm.auth_user_data.email" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Phone:</label>
+                                <input type="text" v-model="editUserForm.auth_user_data.phone" class="form-control" id="recipient-name">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary w-100" >Edit User</button>
+                            </div>
+                            </form>
+                        </div>
+
+                     </div>
+                    </div>
+                </div>
 
 
               <p class="text-muted mt-5">Bill To:</p>
@@ -92,15 +135,15 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body d-flex" v-for="(user, index) in users" :key="index">
+                        <div class="modal-body d-flex" v-for="(client, index) in clients" :key="index">
 
                             <div class="btn-rounded-circle badge-primary">
-                               <div style="margin-left:10px; margin-top:8px"> {{user.name.substring(0,2)}}</div>
+                               <div class="ml-3 mt-2"> {{client.full_name.substring(0,2)}}</div>
                             </div>
                            <div  class="font-weight-bold ml-4">
-                               {{user.name}}
-                             <div class="text-muted">
-                                {{user.email}}
+                               {{client.full_name}}
+                             <div>
+                                {{client.email}}
                              </div>
                           </div>
 
@@ -123,37 +166,38 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form @submit.prevent="createClient()">
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">Full Name (required)</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="text" v-model="clientform.full_name" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">E-mail address (required)</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="email" v-model="clientform.email" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">Client's Address (required)</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="text" v-model="clientform.address" class="form-control" id="recipient-name" required>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">Client's Company</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="text" v-model="clientform.company" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">Country</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="text" v-model="clientform.country" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">Phone:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="number" v-model="clientform.phone" class="form-control" id="recipient-name" required>
                                 </div>
-
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary w-100">Submit</button>
-                        </div>
+
                         </div>
                     </div>
                </div>
@@ -209,27 +253,27 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in items" :key="index">
+                    <tr v-for="(item, index) in Itemform.items" :key="index">
                       <td class="td w-50" >
                         <input class="form-control form-control-sm" type="text" v-model="item.name">
                       </td>
                       <td class="td">
-                        <input type="text" class="form-control form-control-sm"  v-model="item.qty">
+                        <input type="number" class="form-control form-control-sm"  v-model.number="item.qty">
                       </td>
                       <td class="td">
-                        <input type="text" class="form-control form-control-sm" v-model="item.rate">
+                        <input type="number" class="form-control form-control-sm" v-model.number="item.rate">
                       </td>
                       <td class="td text-right">
 
                         {{item.qty * item.rate}}
                       </td>
                       <td class="td">
-                        <button @click="deleteRow()" class="btn-rounded-circle badge-danger"><i class="fe fe-delete"></i></button>
+                        <button @click="deleteRow(index)" class="btn-rounded-circle badge-danger"><i class="fe fe-delete"></i></button>
                       </td>
                     </tr>
                     <tr>
                       <td class="dddd">
-                        <button @click="addRow()" class="btn-rounded-circle badge-primary"><i class="fe fe-plus"></i></button> <span class="text-primary ml-2">Add a line item</span>
+                        <button @click="addRow()" class="btn-rounded-circle badge-primary"><i class="fe fe-plus"></i></button> <span @click="addRow()" class="text-primary ml-2 "> <a href="javascript:void(0)"> Add a line item</a></span>
                       </td>
                       <td class="">
 
@@ -259,7 +303,7 @@
                         </td>
                         <td colspan="3" class=" text-right border-bottom">
                           <span class="">
-                             <input type="text"  class="form-control form-control-sm" v-model="discount">
+                             <input type="number"  class="form-control form-control-sm" v-model.number="Itemform.discount">
                           </span>
                         </td>
                     </tr>
@@ -285,7 +329,7 @@
 
               <!-- Title -->
               <h6 class="text-uppercase">
-                Notes
+                Notes  <button type="button" @click="createInvoice()" class="btn btn-primary btn-sm ml-4">Create Invoice</button>
               </h6>
 
               <!-- Text -->
@@ -303,14 +347,24 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { Form, HasError, AlertError } from 'vform'
+//Including sweet alert
+import Swal from 'sweetalert2'
+
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
     export default {
         props: {
-             user_data: { type: String,  default: null },
+             client_data: { type: String,  default: null },
+             auth_user:   {type: String, default: null}
 
             },
 
         data(){
            return {
+        Itemform: new Form({
              items:
              [
                  {
@@ -321,8 +375,23 @@
                  }
              ],
              discount:0,
+        }),
              subtotal:0,
-             users:[],
+             clients:[],
+
+            clientform: new Form({
+             full_name: '',
+             email: '',
+             address: '',
+             company: '',
+             country: '',
+             phone: '',
+
+            }),
+           editUserForm : new Form({
+               auth_user_data:''
+            }),
+            // auth_user_data:''
 
 
            }
@@ -330,12 +399,46 @@
         mounted() {
             console.log('Component mounted.')
             // console.log( JSON.parse(this.user_data) )
-            this.users = JSON.parse(this.user_data)
+            this.clients = JSON.parse(this.client_data)
+             this.editUserForm.auth_user_data = JSON.parse(this.auth_user)
 
         },
         methods:{
+            createClient () {
+                // Submit the client form via a POST request
+                    this.clientform.post('/create-client')
+                    .then(({ data }) => { console.log(data) })
+                    Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'Client added successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+
+                },
+                createInvoice(){
+
+                if(this.Itemform.items.length) {
+                    this.Itemform.post('/create-invoice')
+                   .then(({ data }) => { console.log(data) })
+                    Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'Invoice Created successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+                 }else{
+                   Swal.fire('Please Add Some Item')
+                 }
+
+
+
+
+                },
              addRow:function(){
-                 this.items.push({
+                 this.Itemform.items.push({
                       name:'',
                       qty:1,
                       rate:0,
@@ -343,11 +446,12 @@
                      })
              },
              deleteRow(index){
-             this.items.splice(index,1);
+                 console.log(index)
+                this.$delete(this.Itemform.items, index)
             },
             calculateSubtotal:function(){
               let subtotal = 0
-              this.items.forEach(val => {
+              this.Itemform.items.forEach(val => {
                   subtotal +=(val.qty)* (val.rate)
               });
               this.subtotal = subtotal
@@ -355,9 +459,20 @@
             },
             calculateTotal: function(){
                let total = 0
-               total = this.subtotal - (this.subtotal * (this.discount / 100));
+               total = this.subtotal - (this.subtotal * (this.Itemform.discount / 100));
                return total
 
+            },
+            editUser: function(){
+               this.editUserForm.post('/update-user')
+                .then(({ data }) => { console.log(data) })
+                Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'User Edit successfully',
+                showConfirmButton: false,
+                timer: 1500
+                })
             }
 
         }
@@ -391,6 +506,10 @@
 
         }
 
+        .addrow {
+          cursor: pointer
+        }
+
         .tablehead {
             /* Rectangle 7 */
 
@@ -415,5 +534,65 @@
             height: 39px;
             border: 1px;
         }
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+         margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
+
+    }
+
+
+    .profile-pic {
+        position: relative;
+        display: inline-block;
+        }
+
+    .profile-pic:hover .edit {
+        display: block;
+    }
+
+    .edit {
+        padding-top: 7px;
+        padding-right: 7px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+    }
+
+    .edit a {
+        color: #000;
+    }
+    .pencil {
+    width: 10px ;
+    height: 50px ;
+    background: dimgray ;
+    position: relative ;
+    transform: rotate(30deg);
+    }
+    .pencil::before {
+    content: "" ;
+    position: absolute ;
+    width: 10px ;
+    height: 10px ;
+    background: dimgray ;
+    top: -13px ;
+    }
+    .pencil::after {
+    content: "" ;
+    position: absolute ;
+    width: 8px ;
+    height: 8px ;
+    background: dimgray ;
+    left: 1px ;
+    bottom: -4px ;
+    transform: rotate(45deg);
+    }
 </style>
 

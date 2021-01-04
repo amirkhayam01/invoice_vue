@@ -16,22 +16,21 @@
 
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidebarCollapse">
-
+            @auth
             <!-- Navigation -->
             <ul class="navbar-nav prospect-sidebar-nav">
+                
+                    
+               
                 <li class="nav-item">
-                    <a class="nav-link active" href="/home">
-                        <i class="fe fe-user"></i> {{-- {{ explode(' ', auth()->user()->name)[0]}} --}}Admin's Profile
+                    <a class="nav-link" href="{{route('invoice.list')}}">
+                        <i class="fe fe-aperture"></i> Invoices List
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="fe fe-aperture"></i> Invoices
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="fe fe-aperture"></i> Articles
+                    <a class="nav-link" href="{{route('invoice.create')}}">
+                        <i class="fe fe-aperture"></i> Create Invoice
                     </a>
                 </li>
 
@@ -42,35 +41,6 @@
             <!-- Navigation -->
 
 
-            <!-- Navigation -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="http://umo.zendesk.com" target="new" class="nav-link">
-                        <i class="fe fe-help-circle"></i> Help &amp; Support</a>
-                </li>
-                <li class="nav-item">
-                    <a href="http://prrage.com/dms/tutorials" target="new" class="nav-link">
-                        <i class="fe fe-youtube"></i> Tutorials</a>
-                </li>
-            </ul>
-
-            <!-- Divider -->
-            <hr class="navbar-divider my-3">
-
-            <!-- Heading -->
-            <!-- <h6 class="navbar-heading">
-                Plugin History
-            </h6> -->
-
-            <!-- Navigation -->
-            <ul class="navbar-nav mb-md-4">
-
-                <li class="nav-item">
-                    <a class="nav-link " href="#">
-                        <i class="fe fe-git-branch"></i> Version <span class="badge badge-primary ml-auto">v1.0.0</span>
-                    </a>
-                </li>
-            </ul>
 
             <!-- Divider -->
             <hr class="navbar-divider my-3">
@@ -93,6 +63,29 @@
 
             <!-- Push content down -->
             <div class="mt-auto"></div>
+
+            @else
+
+                <!-- Navigation -->
+                <ul class="navbar-nav prospect-sidebar-nav">
+        
+            
+        
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('login')}}">
+                            <i class="fe fe-aperture"></i> Login
+                        </a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('register')}}">
+                            <i class="fe fe-aperture"></i> Register
+                        </a>
+                    </li>
+    
+                </ul>
+
+            @endauth
 
 
         </div> <!-- / .navbar-collapse -->
