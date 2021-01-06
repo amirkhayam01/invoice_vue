@@ -29,13 +29,23 @@ class InvoiceController extends Controller
 
     public function edit()
     {
-        // 
+        //
     }
 
 
     public function createClient(Request $request){
       $requestData= $request->all();
-      $client= Client::create($requestData);
+    //   dd($requestData);
+      $client= new Client();
+      $client->user_id=Auth::user()->id;
+      $client->full_name=$requestData['full_name'];
+      $client->email = $requestData['email'];
+      $client->address = $requestData['address'];
+      $client->company = $requestData['company'];
+      $client->country = $requestData['country'];
+      $client->phone = $requestData['phone'];
+
+      $client->save();
       return response()->json($client);
     }
 
@@ -49,14 +59,15 @@ class InvoiceController extends Controller
 
     public function updateUser(Request $request){
         $userData=$request->auth_user_data;
-        dd($userData);
-        $userData= User::find($userData['id']);
-        $userData->name=$userData['name'];
-        $userData->email = $userData['email'];
-        $userData->address = $userData['address'];
-        $userData->state = $userData['state'];
-        $userData->country = $userData['country'];
-        $userData->phone = $userData['phone'];
+        // dd($request);
+        $id =Auth::user()->id;
+        $userData= User::find($id);
+        $userData->name=$request->name;
+        $userData->email = $request->email;
+        $userData->address = $request->address;
+        $userData->state = $request->state;
+        $userData->country = $request->country;
+        $userData->phone = $request->phone;
 
         $userData->save();
         return response()->json($userData);

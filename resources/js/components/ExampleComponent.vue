@@ -58,12 +58,13 @@
 
               <!-- Text -->
 
+
                 <div class="mt-2 mb-4 overlay profile-pic" style="line-height: 25px;" >
-                    {{editUserForm.auth_user_data.name}}<br>
-                    {{editUserForm.auth_user_data.address}} <br>
-                    {{editUserForm.auth_user_data.state}}, {{editUserForm.auth_user_data.city}}<br>
-                    {{editUserForm.auth_user_data.email}}  <br>
-                    {{editUserForm.auth_user_data.phone}}<br>
+                    {{auth_user_data.name}}<br>
+                    {{auth_user_data.address}} <br>
+                    {{auth_user_data.state}}, {{auth_user_data.country}}<br>
+                    {{auth_user_data.email}}  <br>
+                    {{auth_user_data.phone}}<br>
                     <div class="edit mt-3" data-toggle="modal" data-target="#useredit" data-whatever="@mdo"  data-placement="bottom" title="Edit This"><i class="pencil"></i></div>
                 </div>
                 <div class="modal fade" id="useredit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -72,34 +73,39 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                          <form @submit.prevent="editUser()">
+                          <form >
                             <div class="form-group">
                                 <label  class="col-form-label">Name:</label>
-                                <input type="text" v-model="editUserForm.auth_user_data.name" class="form-control" id="recipient-name">
+                                <input type="text" v-model="editUserForm.name" class="form-control" >
+
                             </div>
                             <div class="form-group">
                                 <label  class="col-form-label">Address:</label>
-                                <input type="text" v-model="editUserForm.auth_user_data.address" class="form-control" id="recipient-name">
+                                <input type="text" v-model="editUserForm.address" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label  class="col-form-label">State:</label>
-                                <input type="text" v-model="editUserForm.auth_user_data.state" class="form-control" id="recipient-name">
+                                <input type="text" v-model="editUserForm.state" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-form-label">Country:</label>
+                                <input type="text" v-model="editUserForm.country" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label  class="col-form-label">Email:</label>
-                                <input type="text" v-model="editUserForm.auth_user_data.email" class="form-control" id="recipient-name">
+                                <input type="text" v-model="editUserForm.email" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label  class="col-form-label">Phone:</label>
-                                <input type="text" v-model="editUserForm.auth_user_data.phone" class="form-control" id="recipient-name">
+                                <input type="text" v-model="editUserForm.phone" class="form-control">
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary w-100" >Edit User</button>
+                                <button @click="editUser()" data-dismiss="modal" class="btn btn-primary w-100"  >Edit User</button>
                             </div>
                             </form>
                         </div>
@@ -112,35 +118,43 @@
               <p class="text-muted mt-5">Bill To:</p>
 
                <div class="clickable">
-                  <div class="ml-3 my-2" data-toggle="modal" data-target="#exampleModal">
-                     <br>
-                     <br>
+                  <div class="ml-3 my-2" data-toggle="modal" data-target="#exampleModal"  >
 
+                        <a v-if="selected_client.id" class="nav-link active">
 
-                    <a class="nav-link active"><i class="fe fe-user ml-2"></i> Add Client </a>
-                     <br>
-                     <br>
+                             {{selected_client.full_name}}
+                        <br> {{selected_client.email}}
+                        <br> {{selected_client.address}}
+                        <br> {{selected_client.country}}
+
+                        </a>
+
+                        <a class="nav-link active"  v-if="selected_client.id==null">
+
+                        <i class="fe fe-user ml-2">
+                        </i>
+                        Add Client
+                        </a>
 
                   </div>
 
-
               </div>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                <div class="modal fade bd-example-modal-sm" id="exampleModal"  tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Set the client for this invoice</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="modal-body d-flex" v-for="(client, index) in clients" :key="index">
 
                             <div class="btn-rounded-circle badge-primary">
                                <div class="ml-3 mt-2"> {{client.full_name.substring(0,2)}}</div>
                             </div>
-                           <div  class="font-weight-bold ml-4">
+                           <div  class="font-weight-bold ml-4 select-client" data-dismiss="modal" @click="addClient(index)">
                                {{client.full_name}}
                              <div>
                                 {{client.email}}
@@ -166,7 +180,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form @submit.prevent="createClient()">
+                            <form>
+
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label text-muted">Full Name (required)</label>
                                     <input type="text" v-model="clientform.full_name" class="form-control" id="recipient-name" required>
@@ -193,7 +208,7 @@
                                     <input type="number" v-model="clientform.phone" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                    <button @click="createClient()" data-dismiss="modal"  class="btn btn-primary w-100" >Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -214,9 +229,15 @@
                     <span class="text-muted">Invoice no:</span>
                     <span>INVABC012020</span> <br>
                     <span class="text-muted">Date:</span>
-                    <span>Jan 11th, 2020</span> <br>
+                    <div class="d-flex justify-content-end">
+                        <input type="date" class="form-control form-control-sm w-auto"  v-model="Itemform.date">
+                    </div>
+                     <br>
                     <span class="text-muted">Due Date:</span>
-                    <span>Jan 11th, 2020</span> <br>
+                       <div class="d-flex justify-content-end">
+                         <input type="date" class="form-control form-control-sm w-auto"  v-model="Itemform.due_date">
+                       </div>
+                     <br>
                 </div>
 
 
@@ -273,7 +294,7 @@
                     </tr>
                     <tr>
                       <td class="dddd">
-                        <button @click="addRow()" class="btn-rounded-circle badge-primary"><i class="fe fe-plus"></i></button> <span @click="addRow()" class="text-primary ml-2 "> <a href="javascript:void(0)"> Add a line item</a></span>
+                        <button @click="addRow()"  class="btn-rounded-circle badge-primary"><i class="fe fe-plus"></i></button> <span @click="addRow()" class="text-primary ml-2 "> <a href="javascript:void(0)"> Add a line item</a></span>
                       </td>
                       <td class="">
 
@@ -329,7 +350,7 @@
 
               <!-- Title -->
               <h6 class="text-uppercase">
-                Notes  <button type="button" @click="createInvoice()" class="btn btn-primary btn-sm ml-4">Create Invoice</button>
+                Notes  <button type="button"  @click="createInvoice()" class="btn btn-primary btn-sm ml-4">Create Invoice</button>
               </h6>
 
               <!-- Text -->
@@ -375,6 +396,8 @@ Vue.component(AlertError.name, AlertError)
                  }
              ],
              discount:0,
+             date:'',
+             due_date:'',
         }),
              subtotal:0,
              clients:[],
@@ -389,9 +412,17 @@ Vue.component(AlertError.name, AlertError)
 
             }),
            editUserForm : new Form({
-               auth_user_data:''
+            name:'',
+            email:'',
+            address:'',
+            state:'',
+            country:'',
+            phone:'',
+
             }),
-            // auth_user_data:''
+            auth_user_data:'',
+            selected_client:'',
+
 
 
            }
@@ -399,15 +430,38 @@ Vue.component(AlertError.name, AlertError)
         mounted() {
             console.log('Component mounted.')
             // console.log( JSON.parse(this.user_data) )
-            this.clients = JSON.parse(this.client_data)
-             this.editUserForm.auth_user_data = JSON.parse(this.auth_user)
+             this.clients = JSON.parse(this.client_data)
+            //  auth user data
+             this.auth_user_data = JSON.parse(this.auth_user)
+             this.editUserForm.name=this.auth_user_data.name
+             this.editUserForm.email=this.auth_user_data.email
+             this.editUserForm.address=this.auth_user_data.address
+             this.editUserForm.state=this.auth_user_data.state
+             this.editUserForm.country=this.auth_user_data.country
+             this.editUserForm.phone=this.auth_user_data.phone
+
+
 
         },
         methods:{
+
+
+           addClient:function(index){
+               console.log(index)
+               this.selected_client=this.clients[index]
+               console.log(this.selected_client);
+
+
+           },
+
             createClient () {
                 // Submit the client form via a POST request
                     this.clientform.post('/create-client')
-                    .then(({ data }) => { console.log(data) })
+                    .then(({ data }) => { console.log(data), this.selected_client= data })
+
+                     $('#exampleModal').modal('hide');
+                     $('.modal-backdrop').remove();
+
                     Swal.fire({
                     position: 'top-center',
                     icon: 'success',
@@ -465,7 +519,7 @@ Vue.component(AlertError.name, AlertError)
             },
             editUser: function(){
                this.editUserForm.post('/update-user')
-                .then(({ data }) => { console.log(data) })
+                .then(({ data }) => { console.log(data), this.auth_user_data=data  })
                 Swal.fire({
                 position: 'top-center',
                 icon: 'success',
@@ -594,5 +648,10 @@ Vue.component(AlertError.name, AlertError)
     bottom: -4px ;
     transform: rotate(45deg);
     }
+    .select-client{
+        cursor: pointer;
+    }
+
+
 </style>
 
