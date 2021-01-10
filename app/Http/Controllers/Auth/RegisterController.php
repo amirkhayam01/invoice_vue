@@ -90,17 +90,17 @@ class RegisterController extends Controller
             $fileName .= rand(11111,99999).'.'.$extension; // renaming image
             if(!$pic->move($destinationPath,$fileName))
             {
-                throw new \Exception("Failed Upload");                    
+                throw new \Exception("Failed Upload");
             }
-    
-            $picture = asset("public/assets/images/invoices")."/".$fileName;
+
+            $picture = asset("/assets/images/invoices")."/".$fileName;
             $user->logo = $picture;
         }
 
         $user->save();
 
         return $user;
-        
+
 
 
         // dd($user);

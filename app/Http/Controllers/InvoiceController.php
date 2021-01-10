@@ -51,15 +51,42 @@ class InvoiceController extends Controller
 
 
     public function createInvoice(Request $request){
-       dd($request);
-       return response()->json($request);
+    //    dd($request);
+       $invoice= new Invoice();
+       $invoice->user_id=Auth::user()->id;
+       $invoice->client_id=$request->client_id;
+       $invoice->invoice_no=$request->invoice_no;
+       //add date field in db then you can save date here
+       $invoice->due_date=$request->due_date;
+       $invoice->sales_tax=$request->discount;
+       $invoice->sub_total=$request->sub_total;
+       $invoice->total=$request->total;
+       $invoice->terms='fffffff';
+       //saving item
+        $items= $request->items;
+        $to_insert = [];
+        foreach ($items as $idx => $item) {
+            array_push(
+                $to_insert,
+                [
+                    'description' => $item['name'],
+                    'quantity' => $item['qty'],
+                    'rate' => $item['rate'],
+                    'amount' => $item['rate'] * $item['qty'],
+                ]
+            );
+        }
+       //
+       $invoice->save();
+       $invoice->items()->createMany($to_insert);
+
+       return response()->json($invoice);
        //now you get items array from request and save in db// if you want to see aatribute of item then inpect element in network tab
     }
 
 
     public function updateUser(Request $request){
-        $userData=$request->auth_user_data;
-        // dd($request);
+        // dd($request->logo);
         $id =Auth::user()->id;
         $userData= User::find($id);
         $userData->name=$request->name;
@@ -69,6 +96,23 @@ class InvoiceController extends Controller
         $userData->country = $request->country;
         $userData->phone = $request->phone;
 
+        if($request->hasFile('logo')) {
+            $pic =$request->logo;
+            $destinationPath = public_path()."/assets/images/invoices";
+            $extension =  $pic->getClientOriginalExtension();
+            $fileName = time();
+            $fileName .= rand(11111,99999).'.'.$extension; // renaming image
+            if(!$pic->move($destinationPath,$fileName))
+            {
+                throw new \Exception("Failed Upload");
+            }
+
+            $picture = asset("/assets/images/invoices")."/".$fileName;
+            $userData->logo = $picture;
+
+            // dd($userData->logo);
+        }
+        // dd($userData->logo);
         $userData->save();
         return response()->json($userData);
     //    $user= User::find();

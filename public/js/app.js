@@ -2283,6 +2283,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  //Including sweet alert
 
@@ -2310,7 +2345,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         }],
         discount: 0,
         date: '',
-        due_date: ''
+        due_date: '',
+        invoice_no: 'INVABC012020',
+        selected_currency: 'USD',
+        client_id: '',
+        sub_total: '',
+        total: ''
       }),
       subtotal: 0,
       clients: [],
@@ -2330,8 +2370,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         country: '',
         phone: ''
       }),
+      profilePic: new vform__WEBPACK_IMPORTED_MODULE_1__["Form"]({
+        pic: null
+      }),
       auth_user_data: '',
-      selected_client: ''
+      selected_client: '',
+      currency: [{
+        name: 'USD'
+      }, {
+        name: 'EUR'
+      }, {
+        name: 'ALL'
+      }],
+      errors: []
     };
   },
   mounted: function mounted() {
@@ -2348,10 +2399,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     this.editUserForm.phone = this.auth_user_data.phone;
   },
   methods: {
+    addCurrency: function addCurrency(index) {
+      console.log(index);
+      this.Itemform.selected_currency = this.currency[index].name;
+    },
     addClient: function addClient(index) {
       console.log(index);
       this.selected_client = this.clients[index];
       console.log(this.selected_client);
+      this.Itemform.client_id = this.selected_client.id;
     },
     createClient: function createClient() {
       var _this = this;
@@ -2373,17 +2429,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
     },
     createInvoice: function createInvoice() {
       if (this.Itemform.items.length) {
-        this.Itemform.post('/create-invoice').then(function (_ref2) {
-          var data = _ref2.data;
-          console.log(data);
-        });
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
-          position: 'top-center',
-          icon: 'success',
-          title: 'Invoice Created successfully',
-          showConfirmButton: false,
-          timer: 1500
-        });
+        if (this.Itemform.client_id) {
+          this.Itemform.post('/create-invoice').then(function (_ref2) {
+            var data = _ref2.data;
+            console.log(data);
+          });
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Invoice Created successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          !this.errors.push('Please Select a Client.');
+        }
       } else {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Please Add Some Item');
       }
@@ -2405,12 +2465,36 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MOD
         subtotal += val.qty * val.rate;
       });
       this.subtotal = subtotal;
+      this.Itemform.sub_total = subtotal;
       return subtotal;
     },
     calculateTotal: function calculateTotal() {
       var total = 0;
       total = this.subtotal - this.subtotal * (this.Itemform.discount / 100);
+      this.Itemform.total = total;
       return total;
+    },
+    updateAvatar: function updateAvatar(e) {
+      var file = e.target.files[0];
+      this.pic = file;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      console.log(config);
+      var data = new FormData();
+      data.append('logo', this.pic);
+      data.append('name', this.auth_user_data.name);
+      data.append('email', this.auth_user_data.email);
+      data.append('address', this.auth_user_data.address);
+      data.append('state', this.auth_user_data.state);
+      data.append('country', this.auth_user_data.country);
+      data.append('phone', this.auth_user_data.phone);
+      var t = this;
+      axios.post("/update-user", data, config).then(function (response) {
+        t.auth_user_data = response.data;
+      }); //  console.log( response.data);
     },
     editUser: function editUser() {
       var _this2 = this;
@@ -6872,7 +6956,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* image 1 */\n.invoice {\n    font-style: normal;\n    font-weight: normal;\n    font-size: 48px;\n    line-height: 56px;\n    align-items: center;\n    text-align: right;\n\n    color: #3C445F;\n}\n.clickable{\n    /* Rectangle 4 */\n\n\n    background: #FFFFFF;\n    border: 1px dashed #A4A8B7;\n    box-sizing: border-box;\n    border-radius: 8px;\n    cursor: pointer\n}\n.addrow {\n      cursor: pointer\n}\n.tablehead {\n        /* Rectangle 7 */\n\n    background: #F4F4F4;\n}\n.h6 {\n        color: #3C445F;\n}\n.td {\n\n        cursor: pointer;\n}\n.svg-icon {\n        width: 20px;\n}\n.btn-rounded-circle{\n        width: 39px;\n        height: 39px;\n        border: 1px;\n}\n    /* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\n    input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n     margin: 0;\n}\n\n    /* Firefox */\ninput[type=number] {\n    -moz-appearance: textfield;\n}\n.profile-pic {\n    position: relative;\n    display: inline-block;\n}\n.profile-pic:hover .edit {\n    display: block;\n}\n.edit {\n    padding-top: 7px;\n    padding-right: 7px;\n    position: absolute;\n    right: 0;\n    top: 0;\n    display: none;\n}\n.edit a {\n    color: #000;\n}\n.pencil {\nwidth: 10px ;\nheight: 50px ;\nbackground: dimgray ;\nposition: relative ;\ntransform: rotate(30deg);\n}\n.pencil::before {\ncontent: \"\" ;\nposition: absolute ;\nwidth: 10px ;\nheight: 10px ;\nbackground: dimgray ;\ntop: -13px ;\n}\n.pencil::after {\ncontent: \"\" ;\nposition: absolute ;\nwidth: 8px ;\nheight: 8px ;\nbackground: dimgray ;\nleft: 1px ;\nbottom: -4px ;\ntransform: rotate(45deg);\n}\n.select-client{\n    cursor: pointer;\n}\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n    /* image 1 */\n.invoice {\n        font-style: normal;\n        font-weight: normal;\n        font-size: 48px;\n        line-height: 56px;\n        align-items: center;\n        text-align: right;\n\n        color: #3C445F;\n}\n.clickable{\n        /* Rectangle 4 */\n\n\n        background: #FFFFFF;\n        border: 1px dashed #A4A8B7;\n        box-sizing: border-box;\n        border-radius: 8px;\n        cursor: pointer\n}\n.addrow {\n          cursor: pointer\n}\n.tablehead {\n            /* Rectangle 7 */\n\n        background: #F4F4F4;\n}\n.h6 {\n            color: #3C445F;\n}\n.td {\n\n            cursor: pointer;\n}\n.svg-icon {\n            width: 20px;\n}\n.btn-rounded-circle{\n            width: 39px;\n            height: 39px;\n            border: 1px;\n}\n        /* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\n        input::-webkit-inner-spin-button {\n        -webkit-appearance: none;\n         margin: 0;\n}\n\n        /* Firefox */\ninput[type=number] {\n        -moz-appearance: textfield;\n}\n.profile-pic {\n        position: relative;\n        display: inline-block;\n}\n.profile-pic:hover .edit {\n        display: block;\n}\n.edit {\n        padding-top: 7px;\n        padding-right: 7px;\n        position: absolute;\n        right: 0;\n        top: 0;\n        display: none;\n}\n.edit a {\n        color: #000;\n}\n.pencil {\n    width: 10px ;\n    height: 50px ;\n    background: dimgray ;\n    position: relative ;\n    transform: rotate(30deg);\n}\n.pencil::before {\n    content: \"\" ;\n    position: absolute ;\n    width: 10px ;\n    height: 10px ;\n    background: dimgray ;\n    top: -13px ;\n}\n.pencil::after {\n    content: \"\" ;\n    position: absolute ;\n    width: 8px ;\n    height: 8px ;\n    background: dimgray ;\n    left: 1px ;\n    bottom: -4px ;\n    transform: rotate(45deg);\n}\n.select-client{\n        cursor: pointer;\n}\nlabel {\n   cursor: pointer;\n   /* Style as you please, it will become the visible UI component. */\n}\n#upload-photo {\n    opacity: 0;\n    position: absolute;\n    z-index: -1;\n}\n\n\n", ""]);
 
 // exports
 
@@ -44054,15 +44138,25 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-md-6 text-md-right " }, [
-              _c("img", {
-                staticClass: "image",
-                attrs: {
-                  src:
-                    "https://i.pinimg.com/originals/54/7d/c4/547dc4c397e59567e0d18bf418ba7d2e.jpg",
-                  alt: "",
-                  width: "200px"
-                }
-              }),
+              _c("div", [
+                _c("label", { attrs: { for: "upload-photo" } }, [
+                  _c("img", {
+                    staticClass: "image rounded-circle ml-8",
+                    attrs: {
+                      src: _vm.auth_user_data.logo,
+                      alt: "",
+                      width: "200px"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+                    _c("input", {
+                      attrs: { type: "file", id: "upload-photo", name: "pic" },
+                      on: { change: _vm.updateAvatar }
+                    })
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "mr-4" }, [
                 _c("h1", { staticClass: "invoice " }, [_vm._v("Invoice")]),
@@ -44071,9 +44165,33 @@ var render = function() {
                   _vm._v("Invoice no:")
                 ]),
                 _vm._v(" "),
-                _c("span", [_vm._v("INVABC012020")]),
-                _vm._v(" "),
-                _c("br"),
+                _c("div", { staticClass: "d-flex justify-content-end" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.Itemform.invoice_no,
+                        expression: "Itemform.invoice_no"
+                      }
+                    ],
+                    staticClass: "form-control form-control-sm w-auto",
+                    attrs: { type: "text", readonly: "" },
+                    domProps: { value: _vm.Itemform.invoice_no },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.Itemform,
+                          "invoice_no",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
                 _vm._v(" "),
                 _c("span", { staticClass: "text-muted" }, [_vm._v("Date:")]),
                 _vm._v(" "),
@@ -44369,7 +44487,32 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("tr", [
-                        _vm._m(10),
+                        _c(
+                          "td",
+                          {
+                            staticClass: " text-right ",
+                            attrs: { colspan: "2" }
+                          },
+                          [
+                            _c(
+                              "strong",
+                              {
+                                staticStyle: { cursor: "pointer" },
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#exampleModalCurrency"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "TOTAL (" +
+                                    _vm._s(_vm.Itemform.selected_currency) +
+                                    ")"
+                                )
+                              ]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "td",
@@ -44393,6 +44536,88 @@ var render = function() {
                   )
                 ])
               ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "modal fade bd-example-modal-sm",
+                  attrs: {
+                    id: "exampleModalCurrency",
+                    tabindex: "",
+                    role: "dialog",
+                    "aria-labelledby": "exampleModalLabel",
+                    "aria-hidden": "true"
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-dialog modal-sm",
+                      attrs: { role: "document" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "modal-content" },
+                        [
+                          _vm._m(10),
+                          _vm._v(" "),
+                          _vm._l(_vm.currency, function(cur, index) {
+                            return _c(
+                              "div",
+                              {
+                                key: index,
+                                staticClass: "modal-body d-flex",
+                                staticStyle: { padding: "6px" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "font-weight-bold ml-4 select-client",
+                                    attrs: { "data-dismiss": "modal" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.addCurrency(index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                             " +
+                                        _vm._s(cur.name) +
+                                        "\n\n                        "
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "modal-footer" })
+                        ],
+                        2
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.errors.length
+                ? _c("p", [
+                    _c("b", [_vm._v("Please correct the following error:")]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.errors, function(error, index) {
+                        return _c("li", { key: index }, [_vm._v(_vm._s(error))])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("hr", { staticClass: "my-5" }),
               _vm._v(" "),
@@ -44620,8 +44845,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: " text-right ", attrs: { colspan: "2" } }, [
-      _c("strong", [_vm._v("TOTAL $ (USD)")])
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Select Currency")]
+      )
     ])
   }
 ]

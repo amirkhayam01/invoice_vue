@@ -221,14 +221,21 @@
 
             </div>
             <div class="col-12 col-md-6 text-md-right " >
-
-                <img class="image" src="https://i.pinimg.com/originals/54/7d/c4/547dc4c397e59567e0d18bf418ba7d2e.jpg" alt="" width="200px">
+               <div>
+                    <label for="upload-photo">
+                        <img  class="image rounded-circle ml-8" v-bind:src="auth_user_data.logo" alt="" width="200px">
+                        <form enctype="multipart/form-data">
+                            <input type="file"  id="upload-photo" name="pic"   @change="updateAvatar" >
+                        </form>
+                  </label>
+               </div>
 
                 <div class="mr-4">
                     <h1 class="invoice ">Invoice</h1>
                     <span class="text-muted">Invoice no:</span>
-                    <span>INVABC012020</span> <br>
-                    <span class="text-muted">Date:</span>
+                     <div class="d-flex justify-content-end">
+                        <input type="text" class="form-control form-control-sm w-auto"  v-model="Itemform.invoice_no" readonly>
+                    </div>                    <span class="text-muted">Date:</span>
                     <div class="d-flex justify-content-end">
                         <input type="date" class="form-control form-control-sm w-auto"  v-model="Itemform.date">
                     </div>
@@ -331,7 +338,7 @@
 
                     <tr>
                         <td  colspan="2"  class=" text-right ">
-                          <strong>TOTAL $ (USD)</strong>
+                          <strong data-toggle="modal" data-target="#exampleModalCurrency" style="cursor:pointer">TOTAL ({{Itemform.selected_currency}})</strong>
                         </td>
                         <td colspan="3" class=" text-right border-bottom">
                           <span class="">
@@ -343,7 +350,35 @@
                   </tbody>
                 </table>
               </div>
+               <div class="modal fade bd-example-modal-sm" id="exampleModalCurrency"  tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Select Currency</h5>
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> -->
+                        </div>
+                        <div class="modal-body d-flex" style="padding: 6px;" v-for="(cur, index) in currency" :key="index">
 
+                           <div  class="font-weight-bold ml-4 select-client" data-dismiss="modal" @click="addCurrency(index)">
+                               {{cur.name}}
+
+                          </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                        </div>
+                    </div>
+                </div>
+               <p v-if="errors.length">
+                    <b>Please correct the following error:</b>
+                 <ul>
+                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+                 </ul>
+                </p>
 
               <hr class="my-5">
 
@@ -398,6 +433,12 @@ Vue.component(AlertError.name, AlertError)
              discount:0,
              date:'',
              due_date:'',
+             invoice_no:'INVABC012020',
+             selected_currency:'USD',
+             client_id:'',
+             sub_total:'',
+             total:'',
+
         }),
              subtotal:0,
              clients:[],
@@ -420,8 +461,14 @@ Vue.component(AlertError.name, AlertError)
             phone:'',
 
             }),
+          profilePic: new Form({
+            pic: null,
+           }),
             auth_user_data:'',
             selected_client:'',
+            currency:[ { name:'USD'},{name:'EUR'},{name:'ALL'} ],
+
+            errors: [],
 
 
 
@@ -444,12 +491,16 @@ Vue.component(AlertError.name, AlertError)
 
         },
         methods:{
-
+           addCurrency:function(index){
+               console.log(index)
+                  this.Itemform.selected_currency= this.currency[index].name
+           },
 
            addClient:function(index){
                console.log(index)
                this.selected_client=this.clients[index]
                console.log(this.selected_client);
+               this.Itemform.client_id=this.selected_client.id
 
 
            },
@@ -473,9 +524,13 @@ Vue.component(AlertError.name, AlertError)
                 },
                 createInvoice(){
 
+
+
                 if(this.Itemform.items.length) {
+                 if (this.Itemform.client_id) {
                     this.Itemform.post('/create-invoice')
                    .then(({ data }) => { console.log(data) })
+
                     Swal.fire({
                     position: 'top-center',
                     icon: 'success',
@@ -483,9 +538,11 @@ Vue.component(AlertError.name, AlertError)
                     showConfirmButton: false,
                     timer: 1500
                     })
+                } else{!this.errors.push('Please Select a Client.');}
                  }else{
                    Swal.fire('Please Add Some Item')
                  }
+
 
 
 
@@ -509,13 +566,40 @@ Vue.component(AlertError.name, AlertError)
                   subtotal +=(val.qty)* (val.rate)
               });
               this.subtotal = subtotal
+              this.Itemform.sub_total=subtotal
             return subtotal
             },
             calculateTotal: function(){
                let total = 0
                total = this.subtotal - (this.subtotal * (this.Itemform.discount / 100));
+               this.Itemform.total=total
                return total
 
+            },
+            updateAvatar:function(e){
+                 const file = e.target.files[0]
+                 this.pic=file
+                 const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                 }
+                 console.log(config)
+                 const data = new FormData();
+                 data.append('logo', this.pic);
+                 data.append('name', this.auth_user_data.name);
+                 data.append('email',this.auth_user_data.email);
+                 data.append('address',this.auth_user_data.address);
+                 data.append('state', this.auth_user_data.state);
+                 data.append('country', this.auth_user_data.country);
+                 data.append('phone', this.auth_user_data.phone);
+                 const t = this;
+                 axios.post("/update-user", data,config)
+                 .then(function (response) {
+
+                   t.auth_user_data=response.data
+
+                })
+
+                //  console.log( response.data);
             },
             editUser: function(){
                this.editUserForm.post('/update-user')
@@ -650,6 +734,16 @@ Vue.component(AlertError.name, AlertError)
     }
     .select-client{
         cursor: pointer;
+    }
+ label {
+   cursor: pointer;
+   /* Style as you please, it will become the visible UI component. */
+  }
+
+#upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
     }
 
 
